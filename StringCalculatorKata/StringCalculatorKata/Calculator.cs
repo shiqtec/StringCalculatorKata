@@ -1,8 +1,6 @@
-﻿using StringCalculatorKata.Interface;
-
-namespace StringCalculatorKata
+﻿namespace StringCalculatorKata
 {
-    public class Calculator : ICalculator
+    public class Calculator
     {
     }
 }
