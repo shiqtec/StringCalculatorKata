@@ -1,10 +1,17 @@
-﻿namespace StringCalculatorKata
+﻿using System;
+
+namespace StringCalculatorKata
 {
     public class Calculator
     {
         public int Add(string numbers)
         {
-            return 0;
+            if (numbers is not { Length: > 0 })
+            {
+                return 0;
+            }
+
+            return Convert.ToInt32(numbers);
         }
     }
 }
