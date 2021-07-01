@@ -23,5 +23,11 @@ namespace StringCalculatorKata.Tests
         {
             Assert.Equal(1, _calculator.Add("1"));
         }
+
+        [Fact]
+        public void TwoNumbersReturnsAddition()
+        {
+            Assert.Equal(3, _calculator.Add("1,2"));
+        }
     }
 }
