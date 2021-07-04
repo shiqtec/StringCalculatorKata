@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using System;
+using System.Linq;
+using Xunit;
 
 namespace StringCalculatorKata.Tests
 {
@@ -25,9 +27,19 @@ namespace StringCalculatorKata.Tests
         }
 
         [Fact]
-        public void TwoNumbersReturnsAddition()
+        public void TwoNumbersReturnsSum()
         {
             Assert.Equal(3, _calculator.Add("1,2"));
+        }
+
+        [Fact]
+        public void UnknownAmountNumbersReturnsSum()
+        {
+            var numbersArray = Enumerable.Range(0, 30);
+            var numbersString = String.Join(",", numbersArray);
+            var expectedSum = numbersArray.Sum();
+
+            Assert.Equal(expectedSum, _calculator.Add(numbersString));
         }
     }
 }
