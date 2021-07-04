@@ -12,7 +12,9 @@ namespace StringCalculatorKata
                 return 0;
             }
 
-            return numbers.Split(",")
+            var delimiters = new char[] { ',', '\n' };
+
+            return numbers.Split(delimiters)
                           .Select(number => Convert.ToInt32(number))
                           .Sum();
         }

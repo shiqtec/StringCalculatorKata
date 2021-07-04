@@ -41,5 +41,11 @@ namespace StringCalculatorKata.Tests
 
             Assert.Equal(expectedSum, _calculator.Add(numbersString));
         }
+
+        [Fact]
+        public void AllowNewLineDelimiterReturnsSum()
+        {
+            Assert.Equal(6, _calculator.Add("1\n2,3"));
+        }
     }
 }
