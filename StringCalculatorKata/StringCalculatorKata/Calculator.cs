@@ -24,8 +24,7 @@ namespace StringCalculatorKata
         {
             if(numbers.StartsWith("//"))
             {
-                var numbersStartPosition = numbers.IndexOf("\n") + 1;
-                return (numbers.Substring(2, 1).ToCharArray(), numbers.Substring(numbersStartPosition));
+                return (numbers.Substring(2, 1).ToCharArray(), numbers[(numbers.IndexOf("\n") + 1)..]);
             }
 
             return (new char[] { ',', '\n' }, numbers);
