@@ -12,9 +12,20 @@ namespace StringCalculatorKata
                 return 0;
             }
 
-            var delimiters = new char[] { ',', '\n' };
+            var delimiters = Array.Empty<char>();
 
-            return numbers.Split(delimiters)
+            if(numbers.StartsWith("//"))
+            {
+                delimiters = numbers.Substring(2, 1).ToCharArray();
+
+                var numbersStartPosition = numbers.IndexOf("\n") + 1;
+                numbers = numbers.Substring(numbersStartPosition);
+            } else
+            {
+                delimiters = new char[] { ',', '\n' };
+            }
+
+            return numbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries)
                           .Select(number => Convert.ToInt32(number))
                           .Sum();
         }
