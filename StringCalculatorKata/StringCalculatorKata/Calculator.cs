@@ -16,7 +16,10 @@ namespace StringCalculatorKata
             var delimiterAndNumbersString = GetDelimiterAndNumbersString(numbers);
             numbers = delimiterAndNumbersString.Item2;
 
+            var maxNumber = 1000;
+
             var numbersList = numbers.Split(delimiterAndNumbersString.Item1)
+                                     .Where(number => Convert.ToInt32(number) <= maxNumber)
                                      .Select(number => Convert.ToInt32(number));
 
             ValidateNumbers(numbersList);

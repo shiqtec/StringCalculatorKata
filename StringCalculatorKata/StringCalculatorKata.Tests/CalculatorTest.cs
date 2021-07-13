@@ -67,5 +67,11 @@ namespace StringCalculatorKata.Tests
             var ex = Assert.Throws<ArgumentException>(() => _calculator.Add("//;\n-1;2;-3;-4"));
             Assert.Equal("negatives not allowed: -1, -3, -4", ex.Message);
         }
+
+        [Fact]
+        public void NumbersGreaterThanMaxShouldNotBeAdded()
+        {
+            Assert.Equal(2, _calculator.Add("2,1001"));
+        }
     }
 }
