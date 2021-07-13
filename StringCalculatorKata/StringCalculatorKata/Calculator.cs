@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StringCalculatorKata
@@ -15,9 +16,12 @@ namespace StringCalculatorKata
             var delimiterAndNumbersString = GetDelimiterAndNumbersString(numbers);
             numbers = delimiterAndNumbersString.Item2;
 
-            return numbers.Split(delimiterAndNumbersString.Item1)
-                          .Select(number => Convert.ToInt32(number))
-                          .Sum();
+            var numbersList = numbers.Split(delimiterAndNumbersString.Item1)
+                                     .Select(number => Convert.ToInt32(number));
+
+            ValidateNumbers(numbersList);
+
+            return numbersList.Sum();
         }
 
         public (char[], string) GetDelimiterAndNumbersString(string numbers)
@@ -28,6 +32,18 @@ namespace StringCalculatorKata
             }
 
             return (new char[] { ',', '\n' }, numbers);
+        }
+
+        public void ValidateNumbers(IEnumerable<int> numbersList)
+        {
+            var negativeNumbersList = numbersList.Where(number => number < 0)
+                                                 .Select(number => number);
+
+            if(negativeNumbersList.Any())
+            {
+                throw new ArgumentException($"negatives not allowed: {string.Join(", ", negativeNumbersList)}");
+            }
+                                                 
         }
     }
 }

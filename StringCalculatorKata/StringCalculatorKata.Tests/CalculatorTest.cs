@@ -53,5 +53,19 @@ namespace StringCalculatorKata.Tests
         {
             Assert.Equal(3, _calculator.Add("//;\n1;2"));
         }
+
+        [Fact]
+        public void NegativeNumberReturnsThrowsException()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => _calculator.Add("-1,2"));
+            Assert.Equal("negatives not allowed: -1", ex.Message);
+        }
+
+        [Fact]
+        public void NegativeNumbersReturnsThrowsException()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => _calculator.Add("//;\n-1;2;-3;-4"));
+            Assert.Equal("negatives not allowed: -1, -3, -4", ex.Message);
+        }
     }
 }
