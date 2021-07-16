@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace StringCalculatorKata
 {
@@ -18,7 +19,7 @@ namespace StringCalculatorKata
 
             var maxNumber = 1000;
 
-            var numbersList = numbers.Split(delimiterAndNumbersString.Item1, StringSplitOptions.None)
+            var numbersList = numbers.Split(delimiterAndNumbersString.Item1, StringSplitOptions.RemoveEmptyEntries)
                                      .Where(number => Convert.ToInt32(number) <= maxNumber)
                                      .Select(number => Convert.ToInt32(number));
 
@@ -29,19 +30,20 @@ namespace StringCalculatorKata
 
         public (string[], string) GetDelimiterAndNumbersString(string numbers)
         {
-            if(numbers.StartsWith("//"))
-            {
-                var indexOfDelimterEnd = numbers.IndexOf("\n") - 2;
-                var delimiterData = numbers.Substring(2, indexOfDelimterEnd);
+            var pattern = @"\/\/(?<delimiter>.*)\n(?<numbers>.*)|\/\/\[(?<delimiter>.*)\]\n(?<numbers>.*)";
+            var match = new Regex(pattern).Match(numbers);
 
-                if(numbers.Contains("[") && numbers.Contains("]"))
+            if (match.Success)
+            {
+                var delimiterString = match.Groups["delimiter"].Value;
+                var numbersString = match.Groups["numbers"].Value;
+
+                if(delimiterString.Contains("[") && delimiterString.Contains("]"))
                 {
-                    delimiterData = delimiterData.Substring(1, delimiterData.Length - 2);
-                    var numbersString = numbers.Substring(indexOfDelimterEnd + 3);
-                    return (delimiterData.Replace("][", ",").Split(new string[] { "," }, StringSplitOptions.None), numbersString);
+                    return (delimiterString.Replace("[", ",").Replace("]", ",").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries), numbersString);
                 }
 
-                return (new string[] { numbers.Substring(2, 1) }, numbers[(numbers.IndexOf("\n") + 1)..]);
+                return (new string[] { delimiterString }, numbersString);
             }
 
             return (new string[] { ",", "\n" }, numbers);
