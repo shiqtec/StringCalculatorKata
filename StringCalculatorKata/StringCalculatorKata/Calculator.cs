@@ -18,7 +18,7 @@ namespace StringCalculatorKata
 
             var maxNumber = 1000;
 
-            var numbersList = numbers.Split(delimiterAndNumbersString.Item1)
+            var numbersList = numbers.Split(delimiterAndNumbersString.Item1, StringSplitOptions.None)
                                      .Where(number => Convert.ToInt32(number) <= maxNumber)
                                      .Select(number => Convert.ToInt32(number));
 
@@ -27,14 +27,24 @@ namespace StringCalculatorKata
             return numbersList.Sum();
         }
 
-        public (char[], string) GetDelimiterAndNumbersString(string numbers)
+        public (string[], string) GetDelimiterAndNumbersString(string numbers)
         {
             if(numbers.StartsWith("//"))
             {
-                return (numbers.Substring(2, 1).ToCharArray(), numbers[(numbers.IndexOf("\n") + 1)..]);
+                var indexOfDelimterEnd = numbers.IndexOf("\n") - 2;
+                var delimiterData = numbers.Substring(2, indexOfDelimterEnd);
+
+                if(numbers.Contains("[") && numbers.Contains("]"))
+                {
+                    delimiterData = delimiterData.Substring(1, delimiterData.Length - 2);
+                    var numbersString = numbers.Substring(indexOfDelimterEnd + 3);
+                    return (delimiterData.Replace("][", ",").Split(new string[] { "," }, StringSplitOptions.None), numbersString);
+                }
+
+                return (new string[] { numbers.Substring(2, 1) }, numbers[(numbers.IndexOf("\n") + 1)..]);
             }
 
-            return (new char[] { ',', '\n' }, numbers);
+            return (new string[] { ",", "\n" }, numbers);
         }
 
         public void ValidateNumbers(IEnumerable<int> numbersList)

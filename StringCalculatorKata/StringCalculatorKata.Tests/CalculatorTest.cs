@@ -73,5 +73,11 @@ namespace StringCalculatorKata.Tests
         {
             Assert.Equal(2, _calculator.Add("2,1001"));
         }
+
+        [Fact]
+        public void DelimitersOfAnyLength()
+        {
+            Assert.Equal(6, _calculator.Add("//[***]\n1***2***3"));
+        }
     }
 }
