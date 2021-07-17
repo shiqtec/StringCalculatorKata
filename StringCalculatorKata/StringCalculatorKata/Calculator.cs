@@ -42,10 +42,8 @@ namespace StringCalculatorKata
                 {
                     return (delimiterString.Replace("[", ",").Replace("]", ",").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries), numbersString);
                 }
-
                 return (new string[] { delimiterString }, numbersString);
             }
-
             return (new string[] { ",", "\n" }, numbers);
         }
 
@@ -58,7 +56,6 @@ namespace StringCalculatorKata
             {
                 throw new ArgumentException($"negatives not allowed: {string.Join(", ", negativeNumbersList)}");
             }
-                                                 
         }
     }
 }
