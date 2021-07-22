@@ -30,7 +30,7 @@ namespace StringCalculatorKata
 
         public (string[], string) GetDelimiterAndNumbersString(string numbers)
         {
-            var pattern = @"\/\/(?<delimiter>.*)\n(?<numbers>.*)|\/\/\[(?<delimiter>.*)\]\n(?<numbers>.*)";
+            var pattern = @"\/\/(?<delimiter>.*)\n(?<numbers>.*)";
             var match = new Regex(pattern).Match(numbers);
 
             if (match.Success)
@@ -40,7 +40,7 @@ namespace StringCalculatorKata
 
                 if(delimiterString.Contains("[") && delimiterString.Contains("]"))
                 {
-                    return (delimiterString.Replace("[", ",").Replace("]", ",").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries), numbersString);
+                    return (delimiterString.Replace("[", ",").Replace("]", ",").Split(",", StringSplitOptions.RemoveEmptyEntries), numbersString);
                 }
                 return (new string[] { delimiterString }, numbersString);
             }
